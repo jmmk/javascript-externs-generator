@@ -1,7 +1,7 @@
 # javascript-externs-generator
 Currently a WIP.
 
-Based heavily on https://github.com/wiseman/closure-externs-generator
+Based heavily on http://www.dotnetwise.com/Code/Externs/
 
 ## Using the tool
 The latest working version can be found here: http://jmmk.github.io/javascript-externs-generator/
