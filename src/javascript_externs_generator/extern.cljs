@@ -45,6 +45,7 @@
   (when (seq prototype)
     (str namespace ".prototype = {" (string/join "," (for [p prototype]
                                                                (build-function (:name p)))) "};")))
+
 (defn build-prototype-extern [obj namespace]
   (let [{:keys [name props prototype]} obj
         prototype-extern (build-prototype namespace prototype)
@@ -53,7 +54,7 @@
     (str prototype-extern (string/join child-prototype-externs))))
 
 (defn extract [name]
-  (let [tree (assoc (build-tree (js/eval name) name) :top true)
+  (let [tree (assoc (build-tree (aget js/window name) name) :top true)
         props-extern (build-props-extern tree)
         prototype-extern (build-prototype-extern tree name)
         output (str props-extern prototype-extern)
