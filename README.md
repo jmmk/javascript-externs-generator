@@ -12,7 +12,7 @@ The latest working version can be found here: http://jmmk.github.io/javascript-e
 * develop
 
 ## TODO
-* Clean up extern code
-* Hook up UI events (loading, success, failure, etc.)
-* Test on other libraries (currently only tested with pixi.js)
+* Clean up UI
+* Fix "Maximum call stack exceeded" errors (found with d3.js)
+* Test on other libraries (currently only tested with pixi.js, jQuery, and d3)
 * Release to public (Reddit, Google groups)
