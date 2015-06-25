@@ -121,7 +121,7 @@
        [:span "Loaded Javascripts:"]
        [:ul
         (for [url @loaded-urls]
-          [:li url])]])))
+          [:li {:key url} url])]])))
 
 (defn externed-namespaces[]
   (let [externed-namespaces (rf/subscribe [:externed-namespaces])]
@@ -130,11 +130,11 @@
        [:span "Externed Namespaces:"]
        [:ul
         (for [namespace (keys @externed-namespaces)]
-          [:li [:span {:style {:color "blue"
-                               :text-decoration "underline"
-                               :cursor "pointer"}
-                       :on-click #(rf/dispatch [:show-namespace namespace])}
-                namespace]])]])))
+          [:li {:key namespace} [:span {:style {:color "blue"
+                                                :text-decoration "underline"
+                                                :cursor "pointer"}
+                                        :on-click #(rf/dispatch [:show-namespace namespace])}
+                                 namespace]])]])))
 
 (defn extern-generator []
   [:div
