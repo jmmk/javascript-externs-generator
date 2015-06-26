@@ -13,6 +13,20 @@ The latest working version can be found here: http://jmmk.github.io/javascript-e
 
 ## TODO
 * Clean up UI
-* Fix "Maximum call stack exceeded" errors (found with d3.js)
-* Test on other libraries (currently only tested with pixi.js, jQuery, and d3)
+* Test on other libraries (currently tested with pixi.js, jQuery, d3, and three.js)
 * Release to public (Reddit, Google groups)
+* Fix Errors (See Below)
+
+# Tested libraries
+
+## Error
+| Library | URL | Problem
+|---------|-----|--------
+| d3.js   | https://cdn.rawgit.com/mbostock/d3/master/d3.js | ```Uncaught RangeError: Maximum call stack size exceeded```
+| three.js| https://cdn.rawgit.com/mrdoob/three.js/master/build/three.js|```Uncaught TypeError: Cannot read property 'order' of undefined```
+
+## Working
+| Library | URL
+|---------|----
+| pixi.js | https://cdn.rawgit.com/GoodBoyDigital/pixi.js/master/bin/pixi.js
+| jQuery  | http://code.jquery.com/jquery-2.1.4.js, http://code.jquery.com/jquery-1.9.1.js
