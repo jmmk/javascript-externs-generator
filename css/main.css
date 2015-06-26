@@ -1,0 +1,40 @@
+div {
+  margin: 20px 0px;
+}
+
+p {
+  margin: 0;
+}
+
+#load-js input[type="button"] {
+  display: block;
+}
+
+#generate-externs input[type="button"] {
+  display: block;
+}
+
+#externed-namespaces {
+  display: inline-block;
+  margin-top: 0;
+}
+
+#externed-namespaces ul {
+  margin: 0;
+  padding: 0;
+}
+
+#externed-namespaces li {
+  margin: 0px 1px;
+  float: left;
+  list-style: none;
+}
+
+#externed-namespaces li span {
+  padding: 5px 15px;
+  display: inline-block;
+  border: 1px solid black;
+  border-bottom: none;
+  border-radius: 3px 3px 0px 0px;
+  cursor: pointer;
+}

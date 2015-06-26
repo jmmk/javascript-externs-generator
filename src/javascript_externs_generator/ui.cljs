@@ -99,7 +99,8 @@
 
 (defn extern-output []
   (let [extern (rf/subscribe [:displayed-extern])]
-    [:textarea {:rows 25
+    [:textarea {:id "extern-output"
+                :rows 25
                 :cols 100
                 :read-only true
                 :value @extern}]))
@@ -117,8 +118,8 @@
 (defn loaded-javascripts []
   (let [loaded-urls (rf/subscribe [:loaded-urls])]
     (when (seq @loaded-urls)
-      [:div
-       [:span "Loaded Javascripts:"]
+      [:div {:id "loaded-javascripts"}
+       [:p "Loaded Javascripts:"]
        [:ul
         (for [url @loaded-urls]
           [:li {:key url} url])]])))
@@ -126,39 +127,38 @@
 (defn externed-namespaces[]
   (let [externed-namespaces (rf/subscribe [:externed-namespaces])]
     (when (seq @externed-namespaces)
-      [:div
-       [:span "Externed Namespaces:"]
+      [:div {:id "externed-namespaces"}
+       [:p "Externed Namespaces:"]
        [:ul
         (for [namespace (keys @externed-namespaces)]
-          [:li {:key namespace} [:span {:style {:color "blue"
-                                                :text-decoration "underline"
-                                                :cursor "pointer"}
-                                        :on-click #(rf/dispatch [:show-namespace namespace])}
-                                 namespace]])]])))
+          [:li {:key namespace}
+           [:span {:on-click #(rf/dispatch [:show-namespace namespace])}
+            namespace]])]
+       [extern-output]])))
 
 (defn extern-generator []
   [:div
-   [:h1 "Javascript Externs Generator"]
-   [:p "Load your javascript file:"
-    [:br]
-    "Url:"
+   [:div {:id "title"}
+    [:h1 "Javascript Externs Generator"]]
+
+   [:div {:id "load-js"}
+    [:p "Load your javascript file:"]
+    [:span "Url: "]
     [:input {:type "text"
              :id "js-url"
              :size 120}]
     [loading-js]
-    [:br]
     [:input {:type "button"
              :value "Load"
              :on-click #(rf/dispatch [:load-script])}]]
+
    [loaded-javascripts]
-   [:p "Enter the javascript object you want to extern i.e. jQuery:"
-    [:br]
+   [:div {:id "generate-externs"}
+    [:p "Enter the javascript object you want to extern i.e. jQuery:"]
     [:input {:type "text"
-             :id "extern-namespace"}]]
-   [:input {:type "button"
-            :value "Extern!"
-            :on-click #(rf/dispatch [:generate-extern])}]
-   [:br]
-   [externed-namespaces]
-   [:br]
-   [extern-output]])
+             :id "extern-namespace"}]
+    [:input {:type "button"
+             :value "Extern!"
+             :on-click #(rf/dispatch [:generate-extern])}]]
+
+   [externed-namespaces]])
