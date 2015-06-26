@@ -28,6 +28,9 @@ main() {
   log "Copy images"
   cp -r images "${TMP_DIR}"
 
+  log "Copy CSS"
+  cp -r css "${TMP_DIR}"
+
   log "Commit: ${COMMIT_MSG}"
   $GIT add -A
   $GIT commit -q -m "${COMMIT_MSG}"
