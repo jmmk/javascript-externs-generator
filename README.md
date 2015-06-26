@@ -13,6 +13,7 @@ The latest working version can be found here: http://jmmk.github.io/javascript-e
 
 ## TODO
 * Clean up UI
+* Add Error Handling
 * Test on other libraries (currently tested with pixi.js, jQuery, d3, and three.js)
 * Fix Errors (See Below)
 * Release to public (Reddit, Google groups)
