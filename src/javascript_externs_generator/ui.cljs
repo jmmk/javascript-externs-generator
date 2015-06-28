@@ -1,7 +1,8 @@
 (ns javascript-externs-generator.ui
   (:require-macros [reagent.ratom :as re])
   (:require [re-frame.core :as rf]
-            [cljsjs.jquery]
+            [goog.dom :as dom]
+            [goog.net.jsloader :as jsloader]
             [clojure.string :as string]
             [javascript-externs-generator.extern :refer [extract]]))
 
@@ -16,6 +17,13 @@
 
 (def default-middleware [rf/trim-v])
 
+(defn get-value [id]
+  (.-value (dom/getElement id)))
+
+(defn load-script [url success err]
+  (-> (jsloader/load url)
+      (.addCallbacks success err)))
+
 (rf/register-handler
   :initialize
   (fn [db _]
@@ -24,21 +32,22 @@
 (rf/register-handler
   :load-script
   (fn [db _]
-    (let [url (.val (js/jQuery "#js-url"))]
+    (let [url (get-value "js-url")]
       (if (string/blank? url)
         (do
           (js/alert "Please enter the url of your javascript file to be loaded")
           db)
         (do
-          (.setTimeout js/window #(do (rf/dispatch [:load-failed url])) 5000)
-          (.getScript js/jQuery url #(do (rf/dispatch [:load-succeeded url])))
+          (load-script url
+                       #(rf/dispatch [:load-succeeded url])
+                       #(rf/dispatch [:load-failed url]))
           (assoc db :loading-js true :current-url url))))))
 
 (rf/register-handler
   :generate-extern
   (fn [db _]
     (let [{:keys [externed-namespaces]} db
-          namespace (.val (js/jQuery "#extern-namespace"))]
+          namespace (get-value "extern-namespace")]
       (if (string/blank? namespace)
         (do
           (js/alert "Please enter a namespace to generate an extern")
