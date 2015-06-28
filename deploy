@@ -2,7 +2,7 @@
 
 readonly TMP_DIR=$(mktemp -d /tmp/javascript-externs-generator.XXXXXX)
 readonly REPO=git@github.com:jmmk/javascript-externs-generator.git
-readonly GIT="git -C ${TMP_DIR}"
+readonly GIT="git -C $TMP_DIR"
 readonly COMMIT_MSG="Update to latest build"
 
 log() {
@@ -16,30 +16,30 @@ main() {
   log "Compile to Javascript"
   lein cljsbuild once release
 
-  log "Clone ${REPO}"
-  git clone -q "${REPO}" "${TMP_DIR}"
+  log "Clone $REPO"
+  git clone -q "$REPO" "$TMP_DIR"
 
   log "Checkout gh-pages"
   $GIT checkout -q gh-pages
 
-  log "Copy compiled javascript"
-  cp out-adv/javascript_externs_generator.min.js "${TMP_DIR}/javascripts"
+  log "Remove old assets"
+  rm -r "$TMP_DIR/assets"
 
-  log "Copy images"
-  cp -r images "${TMP_DIR}"
+  log "Copy new assets"
+  cp -r assets "$TMP_DIR"
 
-  log "Copy CSS"
-  cp -r css "${TMP_DIR}"
+  log "Copy index.html"
+  cp index.html "$TMP_DIR"
 
-  log "Commit: ${COMMIT_MSG}"
+  log "Commit: $COMMIT_MSG"
   $GIT add -A
-  $GIT commit -q -m "${COMMIT_MSG}"
+  $GIT commit -q -m "$COMMIT_MSG"
 
   log "Push gh-pages"
   $GIT push -q origin gh-pages
 
   log "Remove temp directory"
-  rm -rf "${TMP_DIR}"
+  rm -rf "$TMP_DIR"
 }
 
-main "${@}"
+main "$@"
