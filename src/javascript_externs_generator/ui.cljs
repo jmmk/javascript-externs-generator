@@ -133,7 +133,7 @@
       [rc/input-textarea
        :model extern
        :on-change #()
-       :width "700px"
+       :width "100%"
        :rows 25])))
 
 (defn loading-js []
@@ -211,6 +211,7 @@
   [rc/v-box
    :gap "10px"
    :margin "20px"
+   :width "50%"
    :children [[rc/title
                :label "JavaScript Externs Generator"
                :underline? true
