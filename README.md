@@ -7,14 +7,13 @@ Based heavily on http://www.dotnetwise.com/Code/Externs/
 The latest working version can be found here: http://jmmk.github.io/javascript-externs-generator/
 
 ## Development
-* ```lein cljsbuild auto dev```
+* ```lein figwheel```
 * open index.html in your browser
 * develop
 
 ## TODO
-* Clean up UI
 * Add Error Handling
-* Test on other libraries (currently tested with pixi.js, jQuery, d3, and three.js)
+* Test on other libraries (currently tested with pixi.js, jQuery, d3, ZeroClipboard, and three.js)
 * Fix Errors (See Below)
 * Release to public (Reddit, Google groups)
 
