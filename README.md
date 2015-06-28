@@ -31,3 +31,4 @@ The latest working version can be found here: http://jmmk.github.io/javascript-e
 |---------|----
 | pixi.js | https://cdn.rawgit.com/GoodBoyDigital/pixi.js/master/bin/pixi.js
 | jQuery  | http://code.jquery.com/jquery-2.1.4.js, http://code.jquery.com/jquery-1.9.1.js
+| ZeroClipboard | https://cdn.rawgit.com/zeroclipboard/zeroclipboard/master/dist/ZeroClipboard.js
