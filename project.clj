@@ -3,8 +3,8 @@
   :url "http://jmmk.github.io/javascript-externs-generator"
 
   :dependencies [[org.clojure/clojure "1.7.0-RC2"]
-                 [cljsjs/react "0.13.3-0"]
                  [re-frame "0.4.1"]
+                 [re-com "0.5.4"]
                  [org.clojure/clojurescript "0.0-3308"]]
 
   :node-dependencies [[source-map-support "0.2.8"]]
@@ -15,15 +15,16 @@
 
   :source-paths ["src"]
 
-  :clean-targets ["out" "out-adv"]
+  :clean-targets ["assets/js/javascript_externs_generator.js"]
 
+  :figwheel {:css-dirs ["assets/css"]}
   :cljsbuild {
     :builds [{:id "dev"
               :source-paths ["src"]
-              :figwheel true
+              :figwheel {:on-jsload "javascript-externs-generator.core/init"}
               :compiler {
-                :main javascript-externs-generator.core
-                :output-to "out/javascript_externs_generator.js"
+                :main "javascript-externs-generator.core"
+                :output-to "assets/js/javascript_externs_generator.js"
                 :output-dir "out"
                 :optimizations :none
                 :cache-analysis true
@@ -31,8 +32,7 @@
              {:id "release"
               :source-paths ["src"]
               :compiler {
-                :main javascript-externs-generator.core
-                :output-to "out-adv/javascript_externs_generator.min.js"
+                :output-to "assets/js/javascript_externs_generator.js"
                 :output-dir "out-adv"
                 :optimizations :advanced
                 :pretty-print false}}]})

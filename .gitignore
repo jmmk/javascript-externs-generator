@@ -5,6 +5,7 @@ figwheel_server.log
 /classes/
 /out/
 /out-adv/
+/assets/js/javascript_externs_generator.js
 /target/
 .lein-deps-sum
 .lein-repl-history
