@@ -1,4 +1,5 @@
 pom.xml
+figwheel_server.log
 *jar
 /lib/
 /classes/

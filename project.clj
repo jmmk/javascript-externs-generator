@@ -11,6 +11,7 @@
   :node-dependencies [[source-map-support "0.2.8"]]
 
   :plugins [[lein-cljsbuild "1.0.6"]
+            [lein-figwheel "0.3.5"]
             [lein-npm "0.4.0"]]
 
   :source-paths ["src"]
@@ -20,6 +21,7 @@
   :cljsbuild {
     :builds [{:id "dev"
               :source-paths ["src"]
+              :figwheel true
               :compiler {
                 :main javascript-externs-generator.core
                 :output-to "out/javascript_externs_generator.js"
