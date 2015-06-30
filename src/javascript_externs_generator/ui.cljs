@@ -11,7 +11,6 @@
 (def default-state {:loaded-urls #{}
                     :externed-namespaces {}
                     :current-namespace nil
-                    :current-url nil
                     :url-text ""
                     :namespace-text ""
                     :loading-js false})
@@ -39,7 +38,7 @@
           (load-script url
                        #(rf/dispatch [:load-succeeded url])
                        #(rf/dispatch [:load-failed url]))
-          (assoc db :loading-js true :current-url url))))))
+          (assoc db :loading-js true))))))
 
 (rf/register-handler
   :generate-extern
