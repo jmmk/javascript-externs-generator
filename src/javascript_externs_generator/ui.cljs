@@ -23,6 +23,9 @@
   (-> (jsloader/load url)
       (.addCallbacks success err)))
 
+(defn error-string [error]
+  (str error.name ": " error.message ". Check console for stack trace."))
+
 (rf/register-handler
   :initialize
   (fn [db _]
@@ -34,7 +37,7 @@
     (let [url (get db :url-text)]
       (if (string/blank? url)
         (do
-          (js/alert "Please enter the url of your javascript file to be loaded")
+          (rf/dispatch [:alert "Blank Field Error" "Please enter the url of your JavaScript file to be loaded"])
           db)
         (do
           (load-script url
@@ -48,7 +51,7 @@
     (let [{:keys [externed-namespaces namespace-text]} db]
       (if (string/blank? namespace-text)
         (do
-          (js/alert "Please enter a namespace to generate an extern")
+          (rf/dispatch [:alert "Blank Field Error" "Please enter a namespace to generate an extern"])
           db)
         (do
           (rf/dispatch [:namespace-text-change ""])
@@ -59,7 +62,7 @@
                                                namespace-text (extract namespace-text)))
             (catch js/Error e
               (.error js/console e)
-              (rf/dispatch [:alert "Error generating extern" (str e.name ": " e.message ". Check console for stack trace.")])
+              (rf/dispatch [:alert "Error generating extern" (error-string e)])
               db)))))))
 
 (rf/register-handler
