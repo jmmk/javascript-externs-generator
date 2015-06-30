@@ -13,6 +13,8 @@
                     :current-namespace nil
                     :url-text ""
                     :namespace-text ""
+                    :alert {:heading ""
+                            :text ""}
                     :loading-js false})
 
 (def default-middleware [rf/trim-v])
@@ -50,10 +52,26 @@
           db)
         (do
           (rf/dispatch [:namespace-text-change ""])
-          (assoc db
-                 :current-namespace namespace-text
-                 :externed-namespaces (assoc externed-namespaces
-                                             namespace-text (extract namespace-text))))))))
+          (try
+            (assoc db
+                   :current-namespace namespace-text
+                   :externed-namespaces (assoc externed-namespaces
+                                               namespace-text (extract namespace-text)))
+            (catch js/Error e
+              (.error js/console e)
+              (rf/dispatch [:alert "Error generating extern" (str e.name ": " e.message ". Check console for stack trace.")])
+              db)))))))
+
+(rf/register-handler
+  :alert
+  [default-middleware]
+  (fn [db [heading text]]
+    (assoc db :alert {:heading heading :text text})))
+
+(rf/register-handler
+  :close-alert
+  (fn [db _]
+    (assoc db :alert {:heading "" :text ""})))
 
 (rf/register-handler
   :load-failed
@@ -125,6 +143,23 @@
   :externed-namespaces
   (fn [db]
     (reaction (get @db :externed-namespaces))))
+
+(rf/register-sub
+  :alert
+  (fn [db]
+    (reaction (:alert @db))))
+
+(defn alert-box []
+  (let [alert (rf/subscribe [:alert])]
+    (fn []
+      (when (not-every? string/blank? [(:heading @alert) (:text @alert)])
+        [rc/alert-box
+         :id "alert-box"
+         :alert-type :danger
+         :heading (:heading @alert)
+         :body (:text @alert)
+         :closeable? true
+         :on-close #(rf/dispatch [:close-alert])]))))
 
 (defn extern-output []
   (let [extern (rf/subscribe [:displayed-extern])]
@@ -215,6 +250,8 @@
                :label "JavaScript Externs Generator"
                :underline? true
                :level :level1]
+
+              [alert-box]
 
               [load-js]
 
