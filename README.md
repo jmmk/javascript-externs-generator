@@ -1,7 +1,7 @@
 # javascript-externs-generator
 Currently a WIP.
 
-Based heavily on http://www.dotnetwise.com/Code/Externs/
+Based on http://www.dotnetwise.com/Code/Externs/
 
 ## Using the tool
 The latest working version can be found here: http://jmmk.github.io/javascript-externs-generator/
@@ -12,7 +12,6 @@ The latest working version can be found here: http://jmmk.github.io/javascript-e
 * develop
 
 ## TODO
-* Add Error Handling
 * Test on other libraries (currently tested with pixi.js, jQuery, d3, ZeroClipboard, and three.js)
 * Fix Errors (See Below)
 * Release to public (Reddit, Google groups)
@@ -22,14 +21,14 @@ The latest working version can be found here: http://jmmk.github.io/javascript-e
 ## Error
 | Library | URL | Problem
 |---------|-----|--------
-| three.js| https://cdn.rawgit.com/mrdoob/three.js/master/build/three.js|```Uncaught TypeError: Cannot read property 'order' of undefined```
+| three.js| https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js|```Uncaught TypeError: Cannot read property 'order' of undefined```
 
 ## Working
 Note: Working means that an extern was successfully generated, but it might still be incomplete
 
 | Library | URL
 |---------|----
-| pixi.js | https://cdn.rawgit.com/GoodBoyDigital/pixi.js/master/bin/pixi.js
-| d3.js   | https://cdn.rawgit.com/mbostock/d3/master/d3.js
+| pixi.js | https://cdnjs.cloudflare.com/ajax/libs/pixi.js/3.0.6/pixi.js
+| d3.js   | https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js
 | jQuery  | http://code.jquery.com/jquery-2.1.4.js, http://code.jquery.com/jquery-1.9.1.js
-| ZeroClipboard | https://cdn.rawgit.com/zeroclipboard/zeroclipboard/master/dist/ZeroClipboard.js
+| ZeroClipboard | https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.js
