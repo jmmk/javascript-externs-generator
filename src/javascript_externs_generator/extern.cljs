@@ -6,12 +6,16 @@
     :function
     :object))
 
+(defn parent-type? [obj]
+  (or (object? obj)
+      (fn? obj)))
+
 (defn build-tree [obj name]
   {:name name
    :type (get-type obj)
    :props (mapv #(let [child (aget obj %)]
-                   (if (or (object? child)
-                           (fn? child))
+                   (if (and (parent-type? child)
+                            (not (identical? obj child)))
                      (build-tree child %)
                      {:name % :type (get-type child)}))
                 (js-keys obj))
