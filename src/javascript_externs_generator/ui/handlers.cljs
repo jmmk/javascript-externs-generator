@@ -67,18 +67,16 @@
   :load-failed
   [default-middleware]
   (fn [db [url]]
-    (let [{:keys [loading-js]} db]
-      (assoc db :loading-js false))))
+    (assoc db :loading-js false)))
 
 (rf/register-handler
   :load-succeeded
   [default-middleware]
   (fn [db [url]]
-    (let [{:keys [loading-js loaded-urls]} db]
-      (rf/dispatch [:url-text-change ""])
-      (assoc db
-             :loading-js false
-             :loaded-urls (conj loaded-urls url)))))
+    (rf/dispatch [:url-text-change ""])
+    (assoc db
+           :loading-js false
+           :loaded-urls (conj (:loaded-urls db) url))))
 
 (rf/register-handler
   :show-namespace
