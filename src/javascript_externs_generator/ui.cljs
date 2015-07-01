@@ -34,7 +34,7 @@
 (rf/register-handler
   :load-script
   (fn [db _]
-    (let [url (get db :url-text)]
+    (let [url (:url-text db)]
       (if (string/blank? url)
         (do
           (rf/dispatch [:alert "Blank Field Error" "Please enter the url of your JavaScript file to be loaded"])
@@ -114,17 +114,17 @@
 (rf/register-sub
   :url-text
   (fn [db]
-    (reaction (get @db :url-text))))
+    (reaction (:url-text @db))))
 
 (rf/register-sub
   :namespace-text
   (fn [db]
-    (reaction (get @db :namespace-text))))
+    (reaction (:namespace-text @db))))
 
 (rf/register-sub
   :current-namespace
   (fn [db]
-    (reaction (get @db :current-namespace))))
+    (reaction (:current-namespace @db))))
 
 (rf/register-sub
   :displayed-extern
@@ -135,17 +135,17 @@
 (rf/register-sub
   :loading-js
   (fn [db]
-    (reaction (get @db :loading-js))))
+    (reaction (:loading-js @db))))
 
 (rf/register-sub
   :loaded-urls
   (fn [db]
-    (reaction (get @db :loaded-urls))))
+    (reaction (:loaded-urls @db))))
 
 (rf/register-sub
   :externed-namespaces
   (fn [db]
-    (reaction (get @db :externed-namespaces))))
+    (reaction (:externed-namespaces @db))))
 
 (rf/register-sub
   :alert
