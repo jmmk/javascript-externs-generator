@@ -13,13 +13,14 @@
 (defn build-tree [obj name]
   {:name name
    :type (get-type obj)
-   :props (mapv #(let [child (aget obj %)]
-                   (if (and (parent-type? child)
-                            (not (identical? obj child)))
-                     (build-tree child %)
-                     {:name % :type (get-type child)}))
-                (js-keys obj))
-   :prototype (mapv #(identity {:name % :type :function}) (js-keys (.-prototype obj)))})
+   :props (for [k (js-keys obj)
+                :let [child (aget obj k)]]
+            (if (and (parent-type? child)
+                     (not (identical? obj child)))
+              (build-tree child k)
+              {:name k :type (get-type child)}))
+   :prototype (for [k (js-keys (.-prototype obj))]
+                {:name k :type :function})})
 
 (defn build-function [name]
   (str (quote-string name) ": function () {}"))
@@ -40,7 +41,7 @@
 
       :else
       (let [props-extern (str "{" (string/join "," (for [p props]
-                                                             (build-props-extern p))) "}")]
+                                                     (build-props-extern p))) "}")]
         (if (get obj :top)
           (str "var " name "=" props-extern ";")
           (str (quote-string name) ":" props-extern))))))
@@ -48,7 +49,7 @@
 (defn build-prototype [namespace prototype]
   (when (seq prototype)
     (str namespace ".prototype = {" (string/join "," (for [p prototype]
-                                                               (build-function (:name p)))) "};")))
+                                                       (build-function (:name p)))) "};")))
 
 (defn build-prototype-extern [obj namespace]
   (let [{:keys [name props prototype]} obj
