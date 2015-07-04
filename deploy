@@ -23,7 +23,7 @@ main() {
   $GIT checkout -q gh-pages
 
   log "Remove old assets"
-  rm -r "$TMP_DIR/assets"
+  rm -rf "$TMP_DIR/assets"
 
   log "Copy new assets"
   cp -r assets "$TMP_DIR"

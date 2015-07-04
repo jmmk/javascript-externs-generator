@@ -2,7 +2,7 @@
   :description "JavaScript Externs Generator"
   :url "http://jmmk.github.io/javascript-externs-generator"
 
-  :dependencies [[org.clojure/clojure "1.7.0-RC2"]
+  :dependencies [[org.clojure/clojure "1.7.0"]
                  [re-frame "0.4.1"]
                  [re-com "0.5.4"]
                  [org.clojure/clojurescript "0.0-3308"]]
@@ -10,12 +10,11 @@
   :node-dependencies [[source-map-support "0.2.8"]]
 
   :plugins [[lein-cljsbuild "1.0.6"]
-            [lein-figwheel "0.3.5"]
-            [lein-npm "0.4.0"]]
+            [lein-figwheel "0.3.5"]]
 
   :source-paths ["src"]
 
-  :clean-targets ["assets/js/javascript_externs_generator.js"]
+  :clean-targets ^{:protect false} ["out" "out-adv" "assets/js/javascript_externs_generator.js"]
 
   :figwheel {:css-dirs ["assets/css"]}
   :cljsbuild {
