@@ -1,6 +1,4 @@
 # javascript-externs-generator
-Currently a WIP.
-
 Based on http://www.dotnetwise.com/Code/Externs/
 
 ## Using the tool
@@ -14,7 +12,6 @@ The latest working version can be found here: http://jmmk.github.io/javascript-e
 ## TODO
 * Test on other libraries (currently tested with pixi.js, jQuery, d3, ZeroClipboard, and three.js)
 * Fix Errors (See Below)
-* Release to public (Reddit, Google groups)
 
 # Tested libraries
 
