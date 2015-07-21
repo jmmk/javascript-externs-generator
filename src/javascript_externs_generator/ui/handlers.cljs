@@ -27,6 +27,12 @@
           (rf/dispatch [:alert "Blank Field Error" "Please enter the url of your JavaScript file to be loaded"])
           db)
         (do
+          (rf/dispatch [:ga-event
+                        {:category "button"
+                         :action "click"
+                         :label "Load"}
+                        {:dimension "dimension3"
+                         :value url}])
           (load-script url
                        #(rf/dispatch [:load-succeeded url])
                        #(rf/dispatch [:load-failed url]))
@@ -42,6 +48,12 @@
           db)
         (do
           (rf/dispatch [:namespace-text-change ""])
+          (rf/dispatch [:ga-event
+                        {:category "button"
+                         :action "click"
+                         :label "Extern!"}
+                        {:dimension "dimension1"
+                         :value namespace-text}])
           (try
             (assoc db
                    :current-namespace namespace-text
@@ -49,8 +61,24 @@
                                                namespace-text (extract namespace-text)))
             (catch js/Error e
               (.error js/console e)
+              (rf/dispatch [:ga-event
+                            {:category "button"
+                             :action "click"
+                             :label "Extern!"}
+                            {:dimension "dimension2"
+                             :value namespace-text}])
               (rf/dispatch [:alert "Error generating extern" (error-string e)])
               db)))))))
+
+(rf/register-handler
+  :ga-event
+  [default-middleware]
+  (fn [db [event custom]]
+    (let [ga (aget js/window "ga")
+          {:keys [category action label]} event
+          {:keys [dimension value]} custom]
+      (ga "send" "event" category action label (clj->js {dimension value})))
+    db))
 
 (rf/register-handler
   :alert
