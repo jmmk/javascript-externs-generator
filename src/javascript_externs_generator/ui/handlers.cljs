@@ -77,7 +77,7 @@
     (let [ga (aget js/window "ga")
           {:keys [category action label]} event
           {:keys [dimension value]} custom]
-      (ga "send" "event" category action label (clj->js {dimension value})))
+      (ga "send" "event" category action label 1 (clj->js {dimension value})))
     db))
 
 (rf/register-handler
