@@ -9,7 +9,7 @@ The latest working version can be found here: http://jmmk.github.io/javascript-e
 * open index.html in your browser
 * develop
 
-## Run Tests
+## Run Unit Tests
 * Make sure node is installed (follow instructions at https://github.com/bensu/doo#node)
 * `lein doo node test`
 

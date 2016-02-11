@@ -59,13 +59,9 @@
     (str prototype-extern (string/join child-prototype-externs))))
 
 (defn extract [name]
-  (let [tree (assoc (build-tree (aget js/window name) name) :top true)
+  (let [js-object (aget js/window name)
+        tree (assoc (build-tree js-object name) :top true)
         props-extern (build-props-extern tree)
-        prototype-extern (build-prototype-extern tree name)
-        output (str props-extern prototype-extern)
-        beautify-options (clj->js {:indent_size 2
-                                   :indent_char " "
-                                   :preserve_newlines true
-                                   :space_after_anon_function true
-                                   :jslint_happy false})]
-    (js/js_beautify output beautify-options)))
+        prototype-extern (build-prototype-extern tree name)]
+    (str props-extern prototype-extern)))
+

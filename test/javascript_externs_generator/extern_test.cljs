@@ -3,5 +3,3 @@
 
 (deftest one-equals-one
   (is (= 1 1)))
-
-(run-tests)

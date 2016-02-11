@@ -12,7 +12,15 @@
       (.addCallbacks success err)))
 
 (defn error-string [error]
-  (str error.name ": " error.message ". Check console for stack trace."))
+  (str (.-name error) ": " (.-message error) ". Check console for stack trace."))
+
+(def beautify-options (clj->js {:indent_size               2
+                                :indent_char               " "
+                                :preserve_newlines         true
+                                :space_after_anon_function true
+                                :jslint_happy              false}))
+(defn beautify [output]
+  (js/js_beautify output beautify-options))
 
 (rf/register-handler
   :initialize
@@ -29,10 +37,10 @@
         (do
           (rf/dispatch [:ga-event
                         {:category "button"
-                         :action "click"
-                         :label "Load"}
+                         :action   "click"
+                         :label    "Load"}
                         {:dimension "dimension3"
-                         :value url}])
+                         :value     url}])
           (load-script url
                        #(rf/dispatch [:load-succeeded url])
                        #(rf/dispatch [:load-failed url]))
@@ -50,23 +58,23 @@
           (rf/dispatch [:namespace-text-change ""])
           (rf/dispatch [:ga-event
                         {:category "button"
-                         :action "click"
-                         :label "Extern!"}
+                         :action   "click"
+                         :label    "Extern!"}
                         {:dimension "dimension1"
-                         :value namespace-text}])
+                         :value     namespace-text}])
           (try
             (assoc db
-                   :current-namespace namespace-text
-                   :externed-namespaces (assoc externed-namespaces
-                                               namespace-text (extract namespace-text)))
+              :current-namespace namespace-text
+              :externed-namespaces (assoc externed-namespaces
+                                     namespace-text (beautify (extract namespace-text))))
             (catch js/Error e
               (.error js/console e)
               (rf/dispatch [:ga-event
                             {:category "button"
-                             :action "click"
-                             :label "Extern!"}
+                             :action   "click"
+                             :label    "Extern!"}
                             {:dimension "dimension2"
-                             :value namespace-text}])
+                             :value     namespace-text}])
               (rf/dispatch [:alert "Error generating extern" (error-string e)])
               db)))))))
 
@@ -103,8 +111,8 @@
   (fn [db [url]]
     (rf/dispatch [:url-text-change ""])
     (assoc db
-           :loading-js false
-           :loaded-urls (conj (:loaded-urls db) url))))
+      :loading-js false
+      :loaded-urls (conj (:loaded-urls db) url))))
 
 (rf/register-handler
   :show-namespace
