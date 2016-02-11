@@ -25,6 +25,7 @@ The strategy can be broken into three steps:
 ## TODO
 * Test on other libraries (currently tested with pixi.js, jQuery, d3, ZeroClipboard, and three.js)
 * Fix Errors (See Below)
+* Write unit tests for extern generation logic. This should help with fixing the known bugs
 
 # Tested libraries
 
