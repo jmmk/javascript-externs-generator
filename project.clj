@@ -10,15 +10,26 @@
   :node-dependencies [[source-map-support "0.2.8"]]
 
   :plugins [[lein-cljsbuild "1.0.6"]
+            [lein-doo "0.1.6"]
             [lein-figwheel "0.3.5"]]
 
   :source-paths ["src"]
 
-  :clean-targets ^{:protect false} ["out" "out-adv" "assets/js/javascript_externs_generator.js"]
+  :clean-targets ^{:protect false} ["out"
+                                    "out-adv"
+                                    "assets/js/javascript_externs_generator.js"
+                                    "target"]
 
   :figwheel {:css-dirs ["assets/css"]}
   :cljsbuild {
-    :builds [{:id "dev"
+    :builds [{:id "test"
+              :source-paths ["src" "test"]
+              :compiler {:output-to "target/test.js"
+                         :output-dir "target"
+                         :target :nodejs
+                         :main javascript-externs-generator.runner
+                         :optimizations :none}}
+             {:id "dev"
               :source-paths ["src"]
               :figwheel {:on-jsload "javascript-externs-generator.core/init"}
               :compiler {

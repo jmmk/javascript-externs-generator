@@ -10,3 +10,6 @@ figwheel_server.log
 .lein-deps-sum
 .lein-repl-history
 .lein-plugins/
+.lein-failures
+.idea
+*.iml
