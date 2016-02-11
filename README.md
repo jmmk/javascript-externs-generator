@@ -1,8 +1,10 @@
 # javascript-externs-generator
-Based on http://www.dotnetwise.com/Code/Externs/
+Try it out: http://jmmk.github.io/javascript-externs-generator/
 
-## Using the tool
-The latest working version can be found here: http://jmmk.github.io/javascript-externs-generator/
+## What is it?
+This is a tool that inspects a JavaScript object in order to generate an extern file detailing the object's properties, methods, and prototype.
+
+For an introduction to Google Closure Compiler advanced compilation and externs, see the [Google Documentation](https://developers.google.com/closure/compiler/docs/api-tutorial3).
 
 ## Development
 * `lein figwheel dev`
@@ -33,3 +35,6 @@ Note: Working means that an extern was successfully generated, but it might stil
 | d3.js   | https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js
 | jQuery  | http://code.jquery.com/jquery-2.1.4.js, http://code.jquery.com/jquery-1.9.1.js
 | ZeroClipboard | https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.js
+
+## Credits
+Based on http://www.dotnetwise.com/Code/Externs/
