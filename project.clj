@@ -19,28 +19,26 @@
                                     "target"]
 
   :figwheel {:css-dirs ["assets/css"]}
-  :cljsbuild {
-    :builds [{:id "test"
-              :source-paths ["src" "test"]
-              :compiler {:output-to "target/test.js"
-                         :output-dir "target"
-                         :target :nodejs
-                         :main javascript-externs-generator.runner
-                         :optimizations :none}}
-             {:id "dev"
-              :source-paths ["src"]
-              :figwheel {:on-jsload "javascript-externs-generator.ui.core/init"}
-              :compiler {
-                :main "javascript-externs-generator.ui.core"
-                :output-to "assets/js/javascript_externs_generator.js"
-                :output-dir "out"
-                :optimizations :none
-                :cache-analysis true
-                :source-map true}}
-             {:id "release"
-              :source-paths ["src"]
-              :compiler {
-                :output-to "assets/js/javascript_externs_generator.js"
-                :output-dir "out-adv"
-                :optimizations :advanced
-                :pretty-print false}}]})
+  :cljsbuild {:builds [{:id           "dev"
+                        :source-paths ["src"]
+                        :figwheel     {:on-jsload "javascript-externs-generator.ui.core/init"}
+                        :compiler     {:main           "javascript-externs-generator.ui.core"
+                                       :output-to      "assets/js/javascript_externs_generator.js"
+                                       :output-dir     "out"
+                                       :optimizations  :none
+                                       :cache-analysis true
+                                       :source-map     true}}
+                       {:id           "test"
+                        :source-paths ["src" "test"]
+                        :compiler     {:output-to     "target/test.js"
+                                       :output-dir    "target"
+                                       :target        :nodejs
+                                       :main          javascript-externs-generator.runner
+                                       :optimizations :none}}
+
+                       {:id           "release"
+                        :source-paths ["src"]
+                        :compiler     {:output-to     "assets/js/javascript_externs_generator.js"
+                                       :output-dir    "out-adv"
+                                       :optimizations :advanced
+                                       :pretty-print  false}}]})
