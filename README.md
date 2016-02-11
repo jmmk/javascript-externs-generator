@@ -5,7 +5,7 @@ Based on http://www.dotnetwise.com/Code/Externs/
 The latest working version can be found here: http://jmmk.github.io/javascript-externs-generator/
 
 ## Development
-* `lein figwheel`
+* `lein figwheel dev`
 * open index.html in your browser
 * develop
 
