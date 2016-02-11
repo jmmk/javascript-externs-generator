@@ -29,9 +29,9 @@
                          :optimizations :none}}
              {:id "dev"
               :source-paths ["src"]
-              :figwheel {:on-jsload "javascript-externs-generator.core/init"}
+              :figwheel {:on-jsload "javascript-externs-generator.ui.core/init"}
               :compiler {
-                :main "javascript-externs-generator.core"
+                :main "javascript-externs-generator.ui.core"
                 :output-to "assets/js/javascript_externs_generator.js"
                 :output-dir "out"
                 :optimizations :none
