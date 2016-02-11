@@ -2,9 +2,16 @@
 Try it out: http://jmmk.github.io/javascript-externs-generator/
 
 ## What is it?
-This is a tool that inspects a JavaScript object in order to generate an extern file detailing the object's properties, methods, and prototype.
+This is a tool that generates an extern file detailing an object's properties, methods, and prototype. It's specifically meant for use with the Google Closure Compiler, which needs any variables defined outside of your code to be declared so that it won't rename or remove them.
 
-For an introduction to Google Closure Compiler advanced compilation and externs, see the [Google Documentation](https://developers.google.com/closure/compiler/docs/api-tutorial3).
+For a more in-depth explanation of Google Closure Compiler advanced compilation and externs, see the [Google Documentation](https://developers.google.com/closure/compiler/docs/api-tutorial3).
+
+## How does it work?
+The strategy can be broken into three steps:
+
+1. Evaluate the code - we want to inspect the runtime representation of the object
+2. Recursively walk through the properties of the object and build a tree of all its properties and metadata about those properties
+3. Recursively walk through the tree and build a string representation of each property
 
 ## Development
 * `lein figwheel dev`
