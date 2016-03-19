@@ -1,5 +1,6 @@
 (ns javascript-externs-generator.extern
-  (:require [clojure.string :as string]))
+  (:require [goog.dom :as dom]
+            [clojure.string :as string]))
 
 (defn get-type
   "Differentiate between function property and object property"
@@ -79,7 +80,8 @@
   "Given the name of a JavaScript object that has been loaded into the global namespace,
   recursively extract properties and prototypes into an extern for use with ClojureScript"
   [name]
-  (let [js-object (aget js/window name)
+  (let [sandbox (dom/getElement "sandbox")
+        js-object (-> sandbox (aget "contentWindow") (aget name))
         tree (assoc (build-tree js-object name) :top true)
         props-extern (build-props-extern tree)
         prototype-extern (build-prototype-extern tree name)]
