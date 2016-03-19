@@ -2,14 +2,17 @@
   (:require [re-frame.core :as rf]
             [clojure.string :as string]
             [goog.net.jsloader :as jsloader]
+            [goog.dom :as dom]
             [javascript-externs-generator.ui.db :refer [default-state]]
             [javascript-externs-generator.extern :refer [extract]]))
 
 (def default-middleware [rf/trim-v])
 
 (defn load-script [url success err]
-  (-> (jsloader/load url)
-      (.addCallbacks success err)))
+  (let [sandbox (dom/getElement "sandbox")
+        options #js {:document (aget sandbox "contentDocument")}]
+    (-> (jsloader/load url options)
+        (.addCallbacks success err))))
 
 (defn error-string [error]
   (str (.-name error) ": " (.-message error) ". Check console for stack trace."))
