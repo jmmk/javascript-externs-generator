@@ -4,7 +4,7 @@
             [goog.net.jsloader :as jsloader]
             [goog.dom :as dom]
             [javascript-externs-generator.ui.db :refer [default-state]]
-            [javascript-externs-generator.extern :refer [extract]]))
+            [javascript-externs-generator.extern :refer [extract-loaded]]))
 
 (def default-middleware [rf/trim-v])
 
@@ -69,7 +69,7 @@
             (assoc db
               :current-namespace namespace-text
               :externed-namespaces (assoc externed-namespaces
-                                     namespace-text (beautify (extract namespace-text))))
+                                     namespace-text (beautify (extract-loaded namespace-text))))
             (catch js/Error e
               (.error js/console e)
               (rf/dispatch [:ga-event

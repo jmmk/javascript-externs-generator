@@ -19,14 +19,14 @@
   "Build a recursive tree representation of the JavaScript object
   and metadata about its properties, prototype, and functions"
   [obj name]
-  {:name name
-   :type (get-type obj)
-   :props (for [k (js-keys obj)
-                :let [child (aget obj k)]]
-            (if (and (parent-type? child)
-                     (not (identical? obj child)))
-              (build-tree child k)
-              {:name k :type (get-type child)}))
+  {:name      name
+   :type      (get-type obj)
+   :props     (for [k (js-keys obj)
+                    :let [child (aget obj k)]]
+                (if (and (parent-type? child)
+                         (not (identical? obj child)))
+                  (build-tree child k)
+                  {:name k :type (get-type child)}))
    :prototype (for [k (js-keys (.-prototype obj))]
                 {:name k :type :function})})
 
@@ -57,8 +57,8 @@
       (let [props-extern (str "{" (string/join "," (for [p props]
                                                      (build-props-extern p))) "}")]
         (if (get obj :top)
-          (str "var " name "=" props-extern ";")
-          (str (quote-string name) ":" props-extern))))))
+          (str "var " name " = " props-extern ";")
+          (str (quote-string name) ": " props-extern))))))
 
 (defn build-prototype
   "Return string representation of an object's prototype/functions"
@@ -77,13 +77,19 @@
     (str prototype-extern (string/join child-prototype-externs))))
 
 (defn extract
-  "Given the name of a JavaScript object that has been loaded into the global namespace,
-  recursively extract properties and prototypes into an extern for use with ClojureScript"
-  [name]
-  (let [sandbox (dom/getElement "sandbox")
-        js-object (-> sandbox (aget "contentWindow") (aget name))
-        tree (assoc (build-tree js-object name) :top true)
+  "Recursively extract properties and prototypes from a JavaScript object
+  into an extern for use with the Google Closure Compiler"
+  [name js-object]
+  (let [tree (assoc (build-tree js-object name) :top true)
         props-extern (build-props-extern tree)
         prototype-extern (build-prototype-extern tree name)]
     (str props-extern prototype-extern)))
+
+(defn extract-loaded
+  "Grab a loaded JavaScript object to extract an extern"
+  [name]
+  (let [sandbox (dom/getElement "sandbox")
+        js-object (-> sandbox (aget "contentWindow") (aget name))]
+    (extract name js-object)))
+
 
