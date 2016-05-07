@@ -3,6 +3,7 @@
             [clojure.string :as string]
             [goog.net.jsloader :as jsloader]
             [goog.dom :as dom]
+            [cljsjs.js-beautify]
             [javascript-externs-generator.ui.db :refer [default-state]]
             [javascript-externs-generator.extern :refer [extract-loaded]]))
 
