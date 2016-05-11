@@ -4,21 +4,28 @@
 
 (enable-console-print!)
 
-(defn compare! [expected, js-string]
+(defn compare!
+  "eval and extract input, then compare it with the expected output"
+  [expected, js-string]
   (js/eval js-string)
   (is (= expected (extern/extract "TEST" js/TEST))))
 
-(deftest function
+(deftest top-level-function
   (let [js-string "function TEST() {}"
         expected "var TEST = {\"testFunction\": function () {}};"]
     (compare! expected js-string)))
 
-(deftest property
+(deftest object-with-property
   (let [js-string "var TEST = {testProperty: \"value\"}"
         expected "var TEST = {\"testProperty\": {}};"]
     (compare! expected js-string)))
 
-(deftest object
+(deftest empty-object
+  (let [js-string "var TEST = {}"
+        expected "var TEST = {};"]
+    (compare! expected js-string)))
+
+(deftest nested-object
   (let [js-string "var TEST = {testObject: {testProperty: \"value\"}}"
         expected "var TEST = {\"testObject\": {\"testProperty\": {}}};"]
     (compare! expected js-string)))
