@@ -31,6 +31,6 @@
     (compare! expected js-string)))
 
 (deftest prototype
-  (let [js-string "var TEST = {testFunction: function(){}}; TEST.testFunction.prototype = {testPrototypeFunction: function() {}}"
+  (let [js-string "var TEST = {testFunction: function(){}}; TEST.testFunction.prototype.testPrototypeFunction = function(){}"
         expected "var TEST = {\"testFunction\": function () {}};TEST.testFunction.prototype = {\"testPrototypeFunction\": function () {}};"]
     (compare! expected js-string)))
