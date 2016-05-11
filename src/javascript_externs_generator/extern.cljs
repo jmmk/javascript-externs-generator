@@ -56,7 +56,7 @@
       :else
       (let [props-extern (str "{" (string/join "," (for [p props]
                                                      (build-props-extern p))) "}")]
-        (if (get obj :top)
+        (if (get obj :root)
           (str "var " name " = " props-extern ";")
           (str (quote-string name) ": " props-extern))))))
 
@@ -80,7 +80,7 @@
   "Recursively extract properties and prototypes from a JavaScript object
   into an extern for use with the Google Closure Compiler"
   [name js-object]
-  (let [tree (assoc (build-tree js-object name) :top true)
+  (let [tree (assoc (build-tree js-object name) :root true)
         props-extern (build-props-extern tree)
         prototype-extern (build-prototype-extern tree name)]
     (str props-extern prototype-extern)))
