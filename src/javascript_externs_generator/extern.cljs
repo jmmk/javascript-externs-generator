@@ -30,11 +30,6 @@
    :prototype (for [k (js-keys (.-prototype obj))]
                 {:name k :type :function})})
 
-(defn build-function
-  "Return string representation of a function"
-  [name]
-  (str (quote-string name) ": function(){}"))
-
 (defn build-props-extern
   "Return recursive string representation of an object's properties"
   [obj]
@@ -52,7 +47,7 @@
   [namespace prototype]
   (when (seq prototype)
     (str namespace ".prototype = {" (string/join "," (for [p prototype]
-                                                       (build-function (:name p)))) "};")))
+                                                       (str (quote-string (:name p)) ": function(){}"))) "};")))
 
 (defn build-prototype-extern
   "Return recursive string representation of an object's prototype chain"
