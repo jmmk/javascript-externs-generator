@@ -30,42 +30,25 @@
    :prototype (for [k (js-keys (.-prototype obj))]
                 {:name k :type :function})})
 
-(defn build-function
-  "Return string representation of a function"
-  [name]
-  (str (quote-string name) ": function () {}"))
-
-(defn build-object
-  "Return string representation of an object property"
-  [name]
-  (str (quote-string name) ": {}"))
-
 (defn build-props-extern
   "Return recursive string representation of an object's properties"
   [obj]
-  (let [{:keys [name type props]} obj]
-    (cond
-      (and (empty? props)
-           (not= type :function))
-      (build-object name)
+  (let [{:keys [name type props]} obj
+        function-str (if (and (= type :function)
+                              (empty? props)) "function()" "")
+        props-extern (str "{" (string/join "," (for [p props]
+                                                 (build-props-extern p))) "}")]
+    (if (get obj :root)
+      (str "var " name " = " function-str props-extern ";")
+      (str (quote-string name) ": " function-str props-extern))))
 
-      (and (empty? props)
-           (= type :function))
-      (build-function name)
-
-      :else
-      (let [props-extern (str "{" (string/join "," (for [p props]
-                                                     (build-props-extern p))) "}")]
-        (if (get obj :top)
-          (str "var " name " = " props-extern ";")
-          (str (quote-string name) ": " props-extern))))))
 
 (defn build-prototype
   "Return string representation of an object's prototype/functions"
   [namespace prototype]
   (when (seq prototype)
     (str namespace ".prototype = {" (string/join "," (for [p prototype]
-                                                       (build-function (:name p)))) "};")))
+                                                       (str (quote-string (:name p)) ": function(){}"))) "};")))
 
 (defn build-prototype-extern
   "Return recursive string representation of an object's prototype chain"
@@ -80,7 +63,7 @@
   "Recursively extract properties and prototypes from a JavaScript object
   into an extern for use with the Google Closure Compiler"
   [name js-object]
-  (let [tree (assoc (build-tree js-object name) :top true)
+  (let [tree (assoc (build-tree js-object name) :root true)
         props-extern (build-props-extern tree)
         prototype-extern (build-prototype-extern tree name)]
     (str props-extern prototype-extern)))

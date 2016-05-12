@@ -10,9 +10,20 @@
   (js/eval js-string)
   (is (= expected (extern/extract "TEST" js/TEST))))
 
-(deftest top-level-function
+(deftest top-level-empty-function
   (let [js-string "function TEST() {}"
-        expected "var TEST = {\"testFunction\": function () {}};"]
+        expected "var TEST = function(){};"]
+    (compare! expected js-string)))
+
+(deftest function-with-property
+  "Functions containing properties should be output as an object with properties"
+  (let [js-string "function TEST(){}; TEST.testProperty = \"value\""
+        expected "var TEST = {\"testProperty\": {}};"]
+    (compare! expected js-string)))
+
+(deftest top-level-empty-object
+  (let [js-string "var TEST = {}"
+        expected "var TEST = {};"]
     (compare! expected js-string)))
 
 (deftest object-with-property
@@ -20,9 +31,9 @@
         expected "var TEST = {\"testProperty\": {}};"]
     (compare! expected js-string)))
 
-(deftest empty-object
-  (let [js-string "var TEST = {}"
-        expected "var TEST = {};"]
+(deftest object-with-function
+  (let [js-string "var TEST = {testFunction: function(){}}"
+        expected "var TEST = {\"testFunction\": function(){}};"]
     (compare! expected js-string)))
 
 (deftest nested-object
@@ -32,5 +43,5 @@
 
 (deftest prototype
   (let [js-string "var TEST = {testFunction: function(){}}; TEST.testFunction.prototype.testPrototypeFunction = function(){}"
-        expected "var TEST = {\"testFunction\": function () {}};TEST.testFunction.prototype = {\"testPrototypeFunction\": function () {}};"]
+        expected "var TEST = {\"testFunction\": function(){}};TEST.testFunction.prototype = {\"testPrototypeFunction\": function(){}};"]
     (compare! expected js-string)))
