@@ -34,7 +34,8 @@
   "Return recursive string representation of an object's properties"
   [obj]
   (let [{:keys [name type props]} obj
-        function-str (if (= type :function) "function()" "")
+        function-str (if (and (= type :function)
+                              (empty? props)) "function()" "")
         props-extern (str "{" (string/join "," (for [p props]
                                                  (build-props-extern p))) "}")]
     (if (get obj :root)
