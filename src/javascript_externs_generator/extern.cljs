@@ -33,32 +33,19 @@
 (defn build-function
   "Return string representation of a function"
   [name]
-  (str (quote-string name) ": function () {}"))
-
-(defn build-object
-  "Return string representation of an object property"
-  [name]
-  (str (quote-string name) ": {}"))
+  (str (quote-string name) ": function(){}"))
 
 (defn build-props-extern
   "Return recursive string representation of an object's properties"
   [obj]
-  (let [{:keys [name type props]} obj]
-    (cond
-      (and (empty? props)
-           (not= type :function))
-      (build-object name)
+  (let [{:keys [name type props]} obj
+        function-str (if (= type :function) "function()" "")
+        props-extern (str "{" (string/join "," (for [p props]
+                                                 (build-props-extern p))) "}")]
+    (if (get obj :root)
+      (str "var " name " = " function-str props-extern ";")
+      (str (quote-string name) ": " function-str props-extern))))
 
-      (and (empty? props)
-           (= type :function))
-      (build-function name)
-
-      :else
-      (let [props-extern (str "{" (string/join "," (for [p props]
-                                                     (build-props-extern p))) "}")]
-        (if (get obj :root)
-          (str "var " name " = " props-extern ";")
-          (str (quote-string name) ": " props-extern))))))
 
 (defn build-prototype
   "Return string representation of an object's prototype/functions"

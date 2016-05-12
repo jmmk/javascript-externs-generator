@@ -12,12 +12,17 @@
 
 (deftest top-level-function
   (let [js-string "function TEST() {}"
-        expected "var TEST = {\"testFunction\": function () {}};"]
+        expected "var TEST = function(){};"]
     (compare! expected js-string)))
 
 (deftest object-with-property
   (let [js-string "var TEST = {testProperty: \"value\"}"
         expected "var TEST = {\"testProperty\": {}};"]
+    (compare! expected js-string)))
+
+(deftest object-with-function
+  (let [js-string "var TEST = {testFunction: function(){}}"
+        expected "var TEST = {\"testFunction\": function(){}};"]
     (compare! expected js-string)))
 
 (deftest empty-object
@@ -32,5 +37,5 @@
 
 (deftest prototype
   (let [js-string "var TEST = {testFunction: function(){}}; TEST.testFunction.prototype.testPrototypeFunction = function(){}"
-        expected "var TEST = {\"testFunction\": function () {}};TEST.testFunction.prototype = {\"testPrototypeFunction\": function () {}};"]
+        expected "var TEST = {\"testFunction\": function(){}};TEST.testFunction.prototype = {\"testPrototypeFunction\": function(){}};"]
     (compare! expected js-string)))
