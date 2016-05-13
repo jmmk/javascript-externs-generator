@@ -1,0 +1,21 @@
+{
+  "name": "javascript-externs-generator",
+  "version": "0.1.0",
+  "description": "Generate externs for use with Google Closure Compiler",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmmk/javascript-externs-generator.git"
+  },
+  "keywords": [
+    "google closure",
+    "closure",
+    "extern",
+    "clojurescript"
+  ],
+  "author": "Michael McLellan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmmk/javascript-externs-generator/issues"
+  },
+  "homepage": "https://jmmk.github.io/javascript-externs-generator"
+}
