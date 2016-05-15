@@ -6,7 +6,7 @@
                  [re-frame "0.5.0"]
                  [re-com "0.5.4"]
                  [cljsjs/js-beautify "1.6.2-0"]
-                 [org.clojure/clojurescript "1.7.228"]]
+                 [org.clojure/clojurescript "1.8.51"]]
 
   :plugins [[lein-cljsbuild "1.1.2"]
             [lein-doo "0.1.6"]
@@ -16,6 +16,8 @@
 
   :clean-targets ^{:protect false} ["out"
                                     "out-adv"
+                                    "out-node"
+                                    "bin"
                                     "assets/js/javascript_externs_generator.js"
                                     "target"]
 
@@ -36,7 +38,13 @@
                                        :target        :nodejs
                                        :main          javascript-externs-generator.runner
                                        :optimizations :none}}
-
+                       {:id "node"
+                        :source-paths ["src"]
+                        :compiler {:main javascript-externs-generator.cli
+                                   :output-to "bin/extern"
+                                   :output-dir "out-node"
+                                   :optimizations :advanced
+                                   :target :nodejs}}
                        {:id           "release"
                         :source-paths ["src"]
                         :compiler     {:output-to     "assets/js/javascript_externs_generator.js"

@@ -17,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/jmmk/javascript-externs-generator/issues"
   },
-  "homepage": "https://jmmk.github.io/javascript-externs-generator"
+  "homepage": "https://jmmk.github.io/javascript-externs-generator",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "js-beautify": "^1.6.2",
+    "jsdom": "^9.0.0"
+  }
 }
