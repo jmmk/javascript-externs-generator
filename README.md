@@ -44,9 +44,11 @@ Web UI
 * develop
 
 Node CLI
+* `npm install`
 * `lein cljsbuild auto cli`
 * develop
-* test: `./bin/extern -f <library>.js -n <library-name> -o extern.js` 
+* test: `./bin/extern -f <library>.js -n <library-name> -o extern.js`
+* If you ever clean/remove ./bin/extern, you will need to run `chmod +x ./bin/extern` when it is recreated
 
 ## Run Unit Tests
 * Make sure node is installed (follow instructions at https://github.com/bensu/doo#node)
