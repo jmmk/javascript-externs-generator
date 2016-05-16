@@ -1,5 +1,5 @@
 {
-  "name": "javascript-externs-generator",
+  "name": "externs-generator",
   "version": "0.1.0",
   "description": "Generate externs for use with Google Closure Compiler",
   "bin": {
