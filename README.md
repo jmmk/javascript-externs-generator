@@ -14,7 +14,7 @@ For a more in-depth explanation of Google Closure Compiler advanced compilation 
 * Generate the extern
 
 #### Node CLI
-Install the cli script: `npm install -g javascript-externs-generator`
+Install the cli script: `npm install -g externs-generator`
 
 **Basic Usage**
 * Make sure the JS library you want to extern is available locally: `curl http://code.jquery.com/jquery-1.9.1.js -o jquery.js`
@@ -22,10 +22,10 @@ Install the cli script: `npm install -g javascript-externs-generator`
 
 **Advanced Usage - Load multiple files**
 * Make sure all JS libraries are available locally:
- * `curl https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xtp1/t39.3284-6/12624079_897774290317920_1379776191_n.js -o React.js`
- * `curl https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xfp1/t39.3284-6/12624052_751451571621845_431133942_n.js -o ReactDOM.js`
- * `curl http://cdn.jsdelivr.net/webjars/org.webjars.npm/react-relay/0.7.3/dist/relay.js -o Relay.js`
-* Run the script: `generate-extern -f React.js,ReactDOM.js,Relay.js -n Relay -o relay-extern.js`
+ * `curl -O https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react.js`
+ * `curl -O https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react-dom.js`
+ * `curl -O http://cdn.jsdelivr.net/webjars/org.webjars.npm/react-relay/0.8.0/dist/relay.js`
+* Run the script: `generate-extern -f react.js,react-dom.js,relay.js -n Relay -o relay-extern.js`
 
 **Known Issues**
 * Some libraries may not be externed properly from the command line - possibly due to differences in jsdom and a real browser environment. The only example I've found is PIXI.js, but it's likely there are more.
