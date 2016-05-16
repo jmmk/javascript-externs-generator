@@ -55,10 +55,12 @@
       (load-js-file window file-name))
 
     ;; Generate Extern
-    (let [js-object (obj/get window namespace)
-          extern-string (extern/extract namespace js-object)
-          beautified ((obj/get js-beautify "js_beautify") extern-string beautify-options)]
-      ; Write output
-      ((obj/get fs "writeFileSync") outfile beautified))))
+    (let [js-object (obj/get window namespace)]
+      (when (nil? js-object)
+        (throw (str "Namespace '" namespace "' was not found. Make sure the library is loaded and the name is spelled correctly.")))
+      (let [extern-string (extern/extract namespace js-object)
+            beautified ((obj/get js-beautify "js_beautify") extern-string beautify-options)]
+        ; Write output
+        ((obj/get fs "writeFileSync") outfile beautified)))))
 
 (set! *main-cli-fn* -main)
