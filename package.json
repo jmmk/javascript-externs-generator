@@ -2,6 +2,9 @@
   "name": "javascript-externs-generator",
   "version": "0.1.0",
   "description": "Generate externs for use with Google Closure Compiler",
+  "bin": {
+    "generate-extern": "bin/extern"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jmmk/javascript-externs-generator.git"

@@ -36,18 +36,19 @@
                         :compiler     {:output-to     "target/test.js"
                                        :output-dir    "target"
                                        :target        :nodejs
-                                       :main          javascript-externs-generator.runner
+                                       :main          "javascript-externs-generator.runner"
                                        :optimizations :none}}
-                       {:id "node"
+                       {:id           "cli"
                         :source-paths ["src"]
-                        :compiler {:main javascript-externs-generator.cli
-                                   :output-to "bin/extern"
-                                   :output-dir "out-node"
-                                   :optimizations :advanced
-                                   :target :nodejs}}
+                        :compiler     {:main          "javascript-externs-generator.cli"
+                                       :output-to     "bin/extern"
+                                       :output-dir    "out-node"
+                                       :optimizations :advanced
+                                       :target        :nodejs}}
                        {:id           "release"
                         :source-paths ["src"]
-                        :compiler     {:output-to     "assets/js/javascript_externs_generator.js"
+                        :compiler     {:main          "javascript-externs-generator.ui.core"
+                                       :output-to     "assets/js/javascript_externs_generator.js"
                                        :output-dir    "out-adv"
                                        :optimizations :advanced
                                        :pretty-print  false}}]})
