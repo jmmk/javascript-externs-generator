@@ -38,12 +38,12 @@ The strategy can be broken into three steps:
 3. Recursively walk through the tree and build a string representation of each property
 
 ## Development
-Web UI
+#### Web UI
 * `lein figwheel dev`
 * open index.html in your browser
 * develop
 
-Node CLI
+#### Node CLI
 * `npm install`
 * `lein cljsbuild auto cli`
 * develop
