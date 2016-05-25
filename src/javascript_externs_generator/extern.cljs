@@ -73,6 +73,8 @@
   [name]
   (let [sandbox (dom/getElement "sandbox")
         js-object (-> sandbox (aget "contentWindow") (aget name))]
+    (when (nil? js-object)
+      (throw (str "Namespace '" name "' was not found. Make sure the library is loaded and the name is spelled correctly.")))
     (extract name js-object)))
 
 

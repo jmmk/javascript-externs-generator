@@ -53,7 +53,7 @@
           :level :level3]
          [rc/horizontal-tabs
           :tabs (for [namespace (keys @externed-namespaces)]
-                  {:id namespace
+                  {:id    namespace
                    :label namespace})
           :model current-namespace
           :on-change #(rf/dispatch [:show-namespace %])]
@@ -80,20 +80,23 @@
         :on-click #(rf/dispatch [:load-script])]])))
 
 (defn generate-externs []
-  (let [namespace-text (rf/subscribe [:namespace-text])]
+  (let [namespace-text (rf/subscribe [:namespace-text])
+        loaded-urls (rf/subscribe [:loaded-urls])]
     (fn []
-      [:div
-       [rc/title
-        :label "Enter the JavaScript object you want to extern:"
-        :level :level3]
-       [rc/input-text
-        :model namespace-text
-        :on-change #(rf/dispatch [:namespace-text-change %])
-        :placeholder "jQuery"
-        :attr {:id "extern-namespace"}]
-       [rc/button
-        :label "Extern!"
-        :on-click #(rf/dispatch [:generate-extern])]])))
+      (when (seq @loaded-urls)
+        [:div
+         [rc/title
+          :label "Enter the JavaScript object you want to extern:"
+          :level :level3]
+         [rc/input-text
+          :model namespace-text
+          :on-change #(rf/dispatch [:namespace-text-change %])
+          :placeholder "jQuery"
+          :attr {:id "extern-namespace"}]
+         [rc/button
+          :label "Extern!"
+          :disabled? (empty? @loaded-urls)
+          :on-click #(rf/dispatch [:generate-extern])]]))))
 
 (defn extern-generator []
   [rc/v-box

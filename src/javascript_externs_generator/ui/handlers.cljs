@@ -16,7 +16,16 @@
         (.addCallbacks success err))))
 
 (defn error-string [error]
-  (str (.-name error) ": " (.-message error) ". Check console for stack trace."))
+  (let [check-console "Check console for stack trace."]
+    (cond
+      (nil? error)
+      (str "Unknown Error: " check-console)
+
+      (string? error)
+      error
+
+      :else
+      (str (.-name error) ": " (.-message error) ". " check-console))))
 
 (def beautify-options (clj->js {:indent_size               2
                                 :indent_char               " "
@@ -59,7 +68,7 @@
               :current-namespace namespace-text
               :externed-namespaces (assoc externed-namespaces
                                      namespace-text (beautify (extract-loaded namespace-text))))
-            (catch js/Error e
+            (catch :default e
               (.error js/console e)
               (rf/dispatch [:alert "Error generating extern" (error-string e)])
               db)))))))
