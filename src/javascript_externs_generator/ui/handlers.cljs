@@ -3,6 +3,7 @@
             [clojure.string :as string]
             [goog.net.jsloader :as jsloader]
             [goog.dom :as dom]
+            [goog.object :as obj]
             [cljsjs.js-beautify]
             [javascript-externs-generator.ui.db :refer [default-state]]
             [javascript-externs-generator.extern :refer [extract-loaded]]))
@@ -11,7 +12,7 @@
 
 (defn load-script [url success err]
   (let [sandbox (dom/getElement "sandbox")
-        options #js {:document (aget sandbox "contentDocument")}]
+        options #js {:document (obj/get sandbox "contentDocument")}]
     (-> (jsloader/load url options)
         (.addCallbacks success err))))
 

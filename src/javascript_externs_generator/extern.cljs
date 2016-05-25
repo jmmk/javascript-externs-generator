@@ -1,5 +1,6 @@
 (ns javascript-externs-generator.extern
   (:require [goog.dom :as dom]
+            [goog.object :as obj]
             [clojure.string :as string]))
 
 (defn get-type
@@ -22,7 +23,7 @@
   {:name      name
    :type      (get-type obj)
    :props     (for [k (js-keys obj)
-                    :let [child (aget obj k)]]
+                    :let [child (obj/get obj k)]]
                 (if (and (parent-type? child)
                          (not (identical? obj child)))
                   (build-tree child k)
@@ -72,7 +73,7 @@
   "Grab a loaded JavaScript object to extract an extern"
   [name]
   (let [sandbox (dom/getElement "sandbox")
-        js-object (-> sandbox (aget "contentWindow") (aget name))]
+        js-object (-> sandbox (obj/get "contentWindow") (obj/get name))]
     (when (nil? js-object)
       (throw (str "Namespace '" name "' was not found. Make sure the library is loaded and the name is spelled correctly.")))
     (extract name js-object)))
