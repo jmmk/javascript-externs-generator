@@ -1,6 +1,7 @@
 (ns javascript-externs-generator.extern
   (:require [goog.dom :as dom]
             [goog.object :as obj]
+            [goog :as g]
             [clojure.string :as string]))
 
 (defn get-type
@@ -13,7 +14,7 @@
 (defn parent-type?
   "Whether it is possible for this object to have child properties"
   [obj]
-  (or (object? obj)
+  (or (= (g/typeOf obj) "object")
       (fn? obj)))
 
 (defn build-tree
