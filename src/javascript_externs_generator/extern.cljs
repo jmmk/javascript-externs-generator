@@ -11,7 +11,7 @@
     :object))
 
 (defn parent-type?
-  "Whether it is possible for this object to have child properties"
+  "Is it possible for this object to have child properties?"
   [obj]
   (or (= (goog/typeOf obj) "object")
       (fn? obj)))
@@ -19,17 +19,21 @@
 (defn generate-object-tree
   "Build a recursive tree representation of the JavaScript object
   and metadata about its properties, prototype, and functions"
-  [obj name]
-  {:name      name
-   :type      (prop-type obj)
-   :props     (for [prop-name (js-keys obj)
-                    :let [child (obj/get obj prop-name)]]
-                (if (and (parent-type? child)
-                         (not (identical? obj child)))
-                  (generate-object-tree child prop-name)
-                  {:name prop-name :type (prop-type child)}))
-   :prototype (for [prop-name (js-keys (.-prototype obj))]
-                {:name prop-name :type :function})})
+  ([obj name]
+   (generate-object-tree obj name #{}))
+
+  ([obj name seen]
+   {:name      name
+    :type      (prop-type obj)
+    :props     (for [prop-name (js-keys obj)
+                     :let [child (obj/get obj prop-name)]]
+                 (if (and (parent-type? child)
+                          (not (contains? seen child))
+                          (not (.-nodeType child)))
+                   (generate-object-tree child prop-name (conj seen child))
+                   {:name prop-name :type (prop-type child)}))
+    :prototype (for [prop-name (js-keys (.-prototype obj))]
+                 {:name prop-name :type :function})}))
 
 (defn emit-props-extern
   "Return recursive string representation of an object's properties"

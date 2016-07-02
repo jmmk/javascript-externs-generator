@@ -45,3 +45,18 @@
   (let [js-string "var TEST = {testFunction: function(){}}; TEST.testFunction.prototype.testPrototypeFunction = function(){}"
         expected "var TEST = {\"testFunction\": function(){}};TEST.testFunction.prototype = {\"testPrototypeFunction\": function(){}};"]
     (compare! expected js-string)))
+
+(deftest circular-reference
+  (let [js-string "var TEST = {}; TEST.prop = TEST;"
+        expected "var TEST = {\"prop\": {\"prop\": {}}};"]
+    (compare! expected js-string)))
+
+(deftest nested-circular-reference
+  (let [js-string "var TEST = {prop: {}}; TEST.prop.circular = TEST;"
+        expected "var TEST = {\"prop\": {\"circular\": {\"prop\": {}}}};"]
+    (compare! expected js-string)))
+
+(deftest dom-node
+  (let [js-string "var TEST = {canvas: document.createElement('canvas')};"
+        expected "var TEST = {\"canvas\": {}};"]
+    (compare! expected js-string)))
