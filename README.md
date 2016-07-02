@@ -51,8 +51,8 @@ The strategy can be broken into three steps:
 * If you ever clean/remove ./bin/extern, you will need to run `chmod +x ./bin/extern` when it is recreated
 
 ## Run Unit Tests
-* Make sure node is installed (follow instructions at https://github.com/bensu/doo#node)
-* `lein doo node test`
+* Make sure phantomjs is installed (follow instructions at https://github.com/bensu/doo#setting-up-environments)
+* `lein doo phantom test`
 
 ## Issues
 Please report any issues to https://github.com/jmmk/javascript-externs-generator/issues

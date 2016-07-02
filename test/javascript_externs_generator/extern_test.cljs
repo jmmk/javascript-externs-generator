@@ -45,3 +45,8 @@
   (let [js-string "var TEST = {testFunction: function(){}}; TEST.testFunction.prototype.testPrototypeFunction = function(){}"
         expected "var TEST = {\"testFunction\": function(){}};TEST.testFunction.prototype = {\"testPrototypeFunction\": function(){}};"]
     (compare! expected js-string)))
+
+(deftest dom-node
+  (let [js-string "var TEST = {canvas: document.createElement('canvas')};"
+        expected "var TEST = {\"canvas\": {}};"]
+    (compare! expected js-string)))

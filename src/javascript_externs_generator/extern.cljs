@@ -11,7 +11,7 @@
     :object))
 
 (defn parent-type?
-  "Whether it is possible for this object to have child properties"
+  "Is it possible for this object to have child properties?"
   [obj]
   (or (= (goog/typeOf obj) "object")
       (fn? obj)))
@@ -25,9 +25,13 @@
    :props     (for [prop-name (js-keys obj)
                     :let [child (obj/get obj prop-name)]]
                 (if (and (parent-type? child)
-                         (not (identical? obj child)))
+                         (not (identical? obj child))
+                         (not (.-nodeType child)))
+
                   (generate-object-tree child prop-name)
+
                   {:name prop-name :type (prop-type child)}))
+
    :prototype (for [prop-name (js-keys (.-prototype obj))]
                 {:name prop-name :type :function})})
 

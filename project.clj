@@ -35,7 +35,6 @@
                         :source-paths ["src" "test"]
                         :compiler     {:output-to     "target/test.js"
                                        :output-dir    "target"
-                                       :target        :nodejs
                                        :main          "javascript-externs-generator.runner"
                                        :optimizations :none}}
                        {:id           "cli"
