@@ -7,13 +7,13 @@ This is a tool that generates an extern file detailing an object's properties, m
 For a more in-depth explanation of Google Closure Compiler advanced compilation and externs, see the [Google Documentation](https://developers.google.com/closure/compiler/docs/api-tutorial3).
 
 ## How to use it
-#### Web UI
+#### Web UI (Recommended)
 * Go to http://jmmk.github.io/javascript-externs-generator/
 * Load one or more JS files
 * Enter the main namespace to extern
 * Generate the extern
 
-#### Node CLI
+#### Node CLI (For scripting/automation)
 Install the cli script: `npm install -g externs-generator`
 
 ##### Basic Usage
