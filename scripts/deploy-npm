@@ -32,9 +32,20 @@ main() {
   log "Copy new executable"
   cp -r bin "$TMP_DIR"
 
+  update_type=""
+  while true; do
+    read -p "Is this a major, minor, or patch release? " update_type
+    if [[ $update_type =~ ^(major|minor|patch)$ ]]; then
+      break
+    fi
+
+    echo "Invalid update type. Must be one of: major | minor | patch" >&2
+    echo ""
+  done
+
   log "Bump version"
   cd "$TMP_DIR"
-  npm version "$bump"
+  npm version $update_type
   cd -
 
   log "Commit: $COMMIT_MSG"
