@@ -1,6 +1,6 @@
 {
   "name": "externs-generator",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Generate externs for use with Google Closure Compiler",
   "bin": {
     "generate-extern": "bin/extern"
