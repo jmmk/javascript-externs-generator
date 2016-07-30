@@ -33,6 +33,10 @@ main() {
   log "Copy new executable"
   cp -r bin "$TMP_DIR"
 
+  log "Commit: $COMMIT_MSG"
+  $GIT add -A
+  $GIT commit -q -m "$COMMIT_MSG"
+
   update_type=""
   while true; do
     read -p "Is this a major, minor, or patch release? " update_type
@@ -48,10 +52,6 @@ main() {
   cd "$TMP_DIR"
   npm version $update_type
   cd -
-
-  log "Commit: $COMMIT_MSG"
-  $GIT add -A
-  $GIT commit -q -m "$COMMIT_MSG"
 
   log "Push npm branch"
   $GIT push -q origin npm
