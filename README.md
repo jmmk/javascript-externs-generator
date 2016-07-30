@@ -16,18 +16,18 @@ For a more in-depth explanation of Google Closure Compiler advanced compilation 
 #### Node CLI
 Install the cli script: `npm install -g externs-generator`
 
-**Basic Usage**
+##### Basic Usage
 * Make sure the JS library you want to extern is available locally: `curl http://code.jquery.com/jquery-1.9.1.js -o jquery.js`
 * Run the script: `generate-extern -f jquery.js -n jQuery -o jquery-extern.js`
 
-**Advanced Usage - Load multiple files**
+##### Advanced Usage - Load multiple files
 * Make sure all JS libraries are available locally:
  * `curl -O https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react.js`
  * `curl -O https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react-dom.js`
  * `curl -O http://cdn.jsdelivr.net/webjars/org.webjars.npm/react-relay/0.8.0/dist/relay.js`
 * Run the script: `generate-extern -f react.js,react-dom.js,relay.js -n Relay -o relay-extern.js`
 
-**Known Issues**
+##### Known Issues
 * Some libraries may not be externed properly from the command line - possibly due to differences in jsdom and a real browser environment. The only example I've found is PIXI.js, but it's likely there are more.
 
 ## How does it work?
