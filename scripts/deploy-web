@@ -18,7 +18,7 @@ main() {
   lein clean
 
   log "Compile to Javascript"
-  lein cljsbuild once release
+  lein cljsbuild once release-web
 
   log "Clone $REPO"
   git clone -q "$REPO" "$TMP_DIR"

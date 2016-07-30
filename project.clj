@@ -37,14 +37,14 @@
                                        :output-dir    "target"
                                        :main          "javascript-externs-generator.runner"
                                        :optimizations :none}}
-                       {:id           "cli"
+                       {:id           "release-npm"
                         :source-paths ["src"]
                         :compiler     {:main          "javascript-externs-generator.cli"
                                        :output-to     "bin/extern"
                                        :output-dir    "out-node"
                                        :optimizations :advanced
                                        :target        :nodejs}}
-                       {:id           "release"
+                       {:id           "release-web"
                         :source-paths ["src"]
                         :compiler     {:main          "javascript-externs-generator.ui.core"
                                        :output-to     "assets/js/javascript_externs_generator.js"
