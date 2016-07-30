@@ -7,7 +7,7 @@ readonly GIT="git -C $TMP_DIR"
 readonly COMMIT_MSG="Update to latest build"
 
 log() {
-  echo "$(date '+%Y-%m-%d %H:%M:%S') | Deploy: $1"
+  echo "$(date '+%Y-%m-%d %H:%M:%S') | Deploy Web: $1"
 }
 
 main() {
