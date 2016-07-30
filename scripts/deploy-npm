@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+readonly DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly TMP_DIR=$(mktemp -d /tmp/javascript-externs-generator.XXXXXX)
+readonly REPO=git@github.com:jmmk/javascript-externs-generator.git
+readonly GIT="git -C $TMP_DIR"
+readonly COMMIT_MSG="Update to latest build"
+
+log() {
+  echo "$(date '+%Y-%m-%d %H:%M:%S') | Deploy NPM: $1"
+}
+
+main() {
+  # Move to main project directory
+  cd "$DIR/.."
+
+  log "lein clean"
+  lein clean
+
+  log "Compile to Javascript"
+  lein cljsbuild once release-npm
+
+  log "Clone $REPO"
+  git clone -q "$REPO" "$TMP_DIR"
+
+  log "Checkout npm branch"
+  $GIT checkout -q npm
+
+  log "Remove old executable"
+  rm -rf "$TMP_DIR/bin"
+
+  log "Copy new executable"
+  cp -r bin "$TMP_DIR"
+
+  log "Bump version"
+  cd "$TMP_DIR"
+  npm version "$bump"
+  cd -
+
+  log "Commit: $COMMIT_MSG"
+  $GIT add -A
+  $GIT commit -q -m "$COMMIT_MSG"
+
+  log "Push npm branch"
+  $GIT push -q origin npm
+
+  log "Publish to npm"
+  cd "$TMP_DIR"
+  npm publish
+  cd -
+
+  log "Remove temp directory"
+  rm -rf "$TMP_DIR"
+}
+
+main "$@"
