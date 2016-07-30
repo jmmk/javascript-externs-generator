@@ -58,7 +58,7 @@
     (let [js-object (obj/get window namespace)]
       (when (nil? js-object)
         (throw (str "Namespace '" namespace "' was not found. Make sure the library is loaded and the name is spelled correctly.")))
-      (let [extern-string (extern/extract namespace js-object)
+      (let [extern-string (extern/wrap-extern namespace (extern/extract namespace js-object))
             beautified ((obj/get js-beautify "js_beautify") extern-string beautify-options)]
         ; Write output
         ((obj/get fs "writeFileSync") outfile beautified)))))
