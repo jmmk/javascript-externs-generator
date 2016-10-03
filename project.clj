@@ -24,7 +24,7 @@
   :figwheel {:css-dirs ["assets/css"]}
   :cljsbuild {:builds [{:id           "dev"
                         :source-paths ["src"]
-                        :figwheel     {:on-jsload "javascript-externs-generator.ui.core/init"}
+                        :figwheel     {:on-jsload "javascript-externs-generator.ui.core/re-render"}
                         :compiler     {:main           "javascript-externs-generator.ui.core"
                                        :output-to      "assets/js/javascript_externs_generator.js"
                                        :output-dir     "out"
