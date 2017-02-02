@@ -1,7 +1,17 @@
 # javascript-externs-generator
 Try it out: http://jmmk.github.io/javascript-externs-generator/
 
-**2016-12-13 Note**: [David Nolen](https://github.com/swannodette) has begun some exciting work on "Externs Inference" in the ClojureScript compiler. See [his gist](https://gist.github.com/swannodette/4fc9ccc13f62c66456daf19c47692799) for the initial details.
+**Note from the developer**:
+The externs generator works pretty well for a wide selection of JS libraries, but there are many exceptions (see the issues for examples). I try to respond to and diagnose issues and I am glad to accept Pull Requests, but I am not actively using or maintaining this.
+
+If you find that it couldn't properly generate externs, I would advise two things:
+
+1. If you only call a few functions from the library, write the extern by hand
+2. Check out [David Nolen](https://github.com/swannodette)'s work on "Externs Inference":
+    - [2016-12-13 Initial Details](https://gist.github.com/swannodette/4fc9ccc13f62c66456daf19c47692799)
+    - [2017-01-27 Announcement on ClojureScript Google Group](https://groups.google.com/forum/#!topic/clojurescript/wGJeG36GPTk)
+    - [Official Docs for JS Modules](https://clojurescript.org/guides/javascript-modules)
+    - [Official Docs for JS Externs](https://clojurescript.org/guides/externs)
 
 ## What is it?
 This is a tool that generates an extern file detailing an object's properties, methods, and prototype. It's specifically meant for use with the Google Closure Compiler, which needs any variables defined outside of your code to be declared so that it won't rename or remove them.
