@@ -25,14 +25,14 @@
   ([obj name seen]
    {:name      name
     :type      (prop-type obj)
-    :props     (for [prop-name (js-keys obj)
+    :props     (for [prop-name (-> obj js-keys sort)
                      :let [child (obj/get obj prop-name)]]
                  (if (and (parent-type? child)
                           (not (contains? seen child))
                           (not (.-nodeType child)))
                    (generate-object-tree child prop-name (conj seen child))
                    {:name prop-name :type (prop-type child)}))
-    :prototype (for [prop-name (js-keys (.-prototype obj))]
+    :prototype (for [prop-name (-> obj .-prototype js-keys sort)]
                  {:name prop-name :type :function})}))
 
 (defn emit-props-extern
@@ -93,5 +93,3 @@
     (when (nil? js-object)
       (throw (str "Namespace '" name "' was not found. Make sure the library is loaded and the name is spelled correctly.")))
     (wrap-extern name (extract name js-object))))
-
-
