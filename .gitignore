@@ -6,6 +6,7 @@ figwheel_server.log
 /out/
 /out-adv/
 /out-node/
+/out-cli/
 /node_modules/
 /assets/js/javascript_externs_generator.js
 /target/

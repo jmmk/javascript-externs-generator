@@ -15,28 +15,6 @@ main() {
   # Move to main project directory
   cd "$DIR/.."
 
-  log "lein clean"
-  lein clean
-
-  log "Compile to Javascript"
-  lein cljsbuild once release-npm
-
-  log "Clone $REPO"
-  git clone -q "$REPO" "$TMP_DIR"
-
-  log "Checkout npm branch"
-  $GIT checkout -q npm
-
-  log "Remove old executable"
-  rm -rf "$TMP_DIR/bin"
-
-  log "Copy new executable"
-  cp -r bin "$TMP_DIR"
-
-  log "Commit: $COMMIT_MSG"
-  $GIT add -A
-  $GIT commit -q -m "$COMMIT_MSG"
-
   update_type=""
   while true; do
     read -p "Is this a major, minor, or patch release? " update_type
@@ -49,9 +27,31 @@ main() {
   done
 
   log "Bump version"
-  cd "$TMP_DIR"
   npm version $update_type
-  cd -
+
+  log "lein clean"
+  lein clean
+
+  log "Compile to Javascript"
+  lein cljsbuild once release-npm
+
+  log "Clone $REPO"
+  git clone -q "$REPO" "$TMP_DIR"
+
+  log "Checkout npm branch"
+  $GIT checkout -q npm
+
+  log "Remove old files"
+  rm -rf "$TMP_DIR/bin"
+  rm "$TMP_DIR/package.json"
+
+  log "Copy new files"
+  cp -r bin "$TMP_DIR"
+  cp package.json "$TMP_DIR"
+
+  log "Commit: $COMMIT_MSG"
+  $GIT add -A
+  $GIT commit -q -m "$COMMIT_MSG"
 
   log "Push npm branch"
   $GIT push -q origin npm
