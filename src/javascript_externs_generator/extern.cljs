@@ -25,14 +25,14 @@
   ([obj name seen]
    {:name      name
     :type      (prop-type obj)
-    :props     (for [prop-name (-> obj js-keys sort)
+    :props     (for [prop-name (-> obj obj/getKeys sort)
                      :let [child (obj/get obj prop-name)]]
                  (if (and (parent-type? child)
                           (not (contains? seen child))
                           (not (.-nodeType child)))
                    (generate-object-tree child prop-name (conj seen child))
                    {:name prop-name :type (prop-type child)}))
-    :prototype (for [prop-name (-> obj .-prototype js-keys sort)]
+    :prototype (for [prop-name (-> obj .-prototype obj/getKeys sort)]
                  {:name prop-name :type :function})}))
 
 (defn emit-props-extern

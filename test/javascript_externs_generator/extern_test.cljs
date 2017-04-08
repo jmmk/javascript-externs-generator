@@ -83,3 +83,8 @@
         expected "var TEST = {\"another\": function(){},\"testFunction\": function(){}};TEST.testFunction.prototype = {\"testPrototypeFunction\": function(){}};"]
     (compare! expected js-string)))
 
+(deftest prototype-getter
+  (let [js-string "var TEST = {testFunction: function(){}}; TEST.testFunction.prototype = {get x() {return this.data.x;}};"
+        expected "var TEST = {\"testFunction\": function(){}};TEST.testFunction.prototype = {\"x\": function(){}};"]
+    (compare! expected js-string)))
+
