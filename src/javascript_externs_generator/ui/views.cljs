@@ -71,7 +71,7 @@
         :children [[rc/input-text
                     :model url-text
                     :on-change #(rf/dispatch [:url-text-change %])
-                    :placeholder "http://code.jquery.com/jquery-1.9.1.js"
+                    :placeholder "https://code.jquery.com/jquery-1.9.1.js"
                     :width "700px"
                     :attr {:id "js-url"}]
                    [loading-js]]]
