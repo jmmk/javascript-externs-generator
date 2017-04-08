@@ -72,3 +72,14 @@
                     "/**********************************************************************/\n")
         expected (str header "var TEST = {};\n" footer)]
     (is (= expected output))))
+
+(deftest sorted-keys
+  (let [js-string "var TEST = {zero: 0, apple: 0, octopus: 0};"
+        expected "var TEST = {\"apple\": {},\"octopus\": {},\"zero\": {}};"]
+    (compare! expected js-string)))
+
+(deftest sorted-prototype-keys
+  (let [js-string "var TEST = {testFunction: function(){}, another: function(){}}; TEST.testFunction.prototype.testPrototypeFunction = function(){}"
+        expected "var TEST = {\"another\": function(){},\"testFunction\": function(){}};TEST.testFunction.prototype = {\"testPrototypeFunction\": function(){}};"]
+    (compare! expected js-string)))
+
