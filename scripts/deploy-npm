@@ -15,20 +15,6 @@ main() {
   # Move to main project directory
   cd "$DIR/.."
 
-  update_type=""
-  while true; do
-    read -p "Is this a major, minor, or patch release? " update_type
-    if [[ $update_type =~ ^(major|minor|patch)$ ]]; then
-      break
-    fi
-
-    echo "Invalid update type. Must be one of: major | minor | patch" >&2
-    echo ""
-  done
-
-  log "Bump version"
-  npm version $update_type
-
   log "lein clean"
   lein clean
 
@@ -53,13 +39,35 @@ main() {
   $GIT add -A
   $GIT commit -q -m "$COMMIT_MSG"
 
+  update_type=""
+  while true; do
+    read -p "Is this a major, minor, or patch release? " update_type
+    if [[ $update_type =~ ^(major|minor|patch)$ ]]; then
+      break
+    fi
+
+    echo "Invalid update type. Must be one of: major | minor | patch" >&2
+    echo ""
+  done
+
+  log "Bump version"
+  pushd "$TMP_DIR"
+  npm version $update_type
+  popd
+
   log "Push npm branch"
   $GIT push -q origin npm
 
+  log "Copy package.json back"
+  cp "$TMP/package.json" "$DIR/package.json"
+  git add package.json
+  git commit -q -m "Update package.json"
+  git push -q origin master
+
   log "Publish to npm"
-  cd "$TMP_DIR"
+  pushd "$TMP_DIR"
   npm publish
-  cd -
+  popd -
 
   log "Remove temp directory"
   rm -rf "$TMP_DIR"
