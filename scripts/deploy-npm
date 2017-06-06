@@ -59,7 +59,7 @@ main() {
   $GIT push -q origin npm
 
   log "Copy package.json back"
-  cp "$TMP/package.json" "$DIR/package.json"
+  cp "$TMP_DIR/package.json" "$DIR/package.json"
   git add package.json
   git commit -q -m "Update package.json"
   git push -q origin master
