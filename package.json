@@ -23,7 +23,6 @@
   "homepage": "https://jmmk.github.io/javascript-externs-generator",
   "dependencies": {
     "commander": "^2.9.0",
-    "externs-generator": "^0.2.3",
     "global": "^4.3.1",
     "js-beautify": "^1.6.2",
     "jsdom": "^9.0.0"

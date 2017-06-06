@@ -182,14 +182,6 @@ extend@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.0.tgz#5a474353b9f3353ddd8176dfd37b91c83a46f1d4"
 
-externs-generator@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/externs-generator/-/externs-generator-0.2.3.tgz#638a44bd217e9812e885c8b1591ba19a39c56752"
-  dependencies:
-    commander "^2.9.0"
-    js-beautify "^1.6.2"
-    jsdom "^9.0.0"
-
 extsprintf@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
