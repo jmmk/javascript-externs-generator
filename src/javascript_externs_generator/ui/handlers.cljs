@@ -38,11 +38,11 @@
 (defn beautify [output]
   (js/js_beautify output beautify-options))
 
-(rf/register-handler
+(rf/reg-event-db
   :initialize
   (fn [_ _] default-state))
 
-(rf/register-handler
+(rf/reg-event-db
   :load-script
   (fn [db _]
     (let [url (:url-text db)]
@@ -56,7 +56,7 @@
                        #(rf/dispatch [:load-failed url]))
           (assoc db :loading-js true))))))
 
-(rf/register-handler
+(rf/reg-event-db
   :generate-extern
   (fn [db _]
     (let [{:keys [externed-namespaces namespace-text]} db]
@@ -76,24 +76,24 @@
               (rf/dispatch [:alert "Error generating extern" (error-string e)])
               db)))))))
 
-(rf/register-handler
+(rf/reg-event-db
   :alert
   [default-middleware]
   (fn [db [heading text]]
     (assoc db :alert {:heading heading :text text})))
 
-(rf/register-handler
+(rf/reg-event-db
   :close-alert
   (fn [db _]
     (assoc db :alert {:heading "" :text ""})))
 
-(rf/register-handler
+(rf/reg-event-db
   :load-failed
   [default-middleware]
   (fn [db [url]]
     (assoc db :loading-js false)))
 
-(rf/register-handler
+(rf/reg-event-db
   :load-succeeded
   [default-middleware]
   (fn [db [url]]
@@ -102,19 +102,19 @@
       :loading-js false
       :loaded-urls (conj (:loaded-urls db) url))))
 
-(rf/register-handler
+(rf/reg-event-db
   :show-namespace
   [default-middleware]
   (fn [db [namespace]]
     (assoc db :current-namespace namespace)))
 
-(rf/register-handler
+(rf/reg-event-db
   :url-text-change
   [default-middleware]
   (fn [db [url-text]]
     (assoc db :url-text url-text)))
 
-(rf/register-handler
+(rf/reg-event-db
   :namespace-text-change
   [default-middleware]
   (fn [db [namespace-text]]
