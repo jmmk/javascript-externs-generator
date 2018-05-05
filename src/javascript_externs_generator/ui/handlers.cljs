@@ -4,6 +4,7 @@
             [goog.net.jsloader :as jsloader]
             [goog.dom :as dom]
             [goog.object :as obj]
+            [goog.html.legacyconversions :as conv]
             [cljsjs.js-beautify]
             [javascript-externs-generator.ui.db :refer [default-state]]
             [javascript-externs-generator.extern :refer [extract-loaded]]))
@@ -11,9 +12,10 @@
 (def default-middleware [rf/trim-v])
 
 (defn load-script [url success err]
-  (let [sandbox (dom/getElement "sandbox")
+  (let [converted-url (conv/trustedResourceUrlFromString url)
+        sandbox (dom/getElement "sandbox")
         options #js {:document (obj/get sandbox "contentDocument")}]
-    (-> (jsloader/load url options)
+    (-> (jsloader/safeLoad converted-url options)
         (.addCallbacks success err))))
 
 (defn error-string [error]

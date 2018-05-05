@@ -3,14 +3,14 @@
   :url "http://jmmk.github.io/javascript-externs-generator"
 
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [re-frame "0.5.0"]
-                 [re-com "0.5.4"]
-                 [cljsjs/js-beautify "1.6.2-0"]
-                 [org.clojure/clojurescript "1.8.51"]]
+                 [re-frame "0.10.5"]
+                 [re-com "2.1.0"]
+                 [cljsjs/js-beautify "1.6.8-0"]
+                 [org.clojure/clojurescript "1.10.238"]]
 
-  :plugins [[lein-cljsbuild "1.1.2"]
-            [lein-doo "0.1.6"]
-            [lein-figwheel "0.5.0-6"]]
+  :plugins [[lein-cljsbuild "1.1.7"]
+            [lein-doo "0.1.10"]
+            [lein-figwheel "0.5.15"]]
 
   :source-paths ["src"]
 
