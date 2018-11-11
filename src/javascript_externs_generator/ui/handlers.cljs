@@ -5,7 +5,6 @@
             [goog.dom :as dom]
             [goog.object :as obj]
             [goog.html.legacyconversions :as conv]
-            [cljsjs.js-beautify]
             [javascript-externs-generator.ui.db :refer [default-state]]
             [javascript-externs-generator.extern :refer [extract-loaded]]))
 

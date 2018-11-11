@@ -2,15 +2,16 @@
   :description "JavaScript Externs Generator"
   :url "http://jmmk.github.io/javascript-externs-generator"
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
+                 ; Override cljs-time version to fix warnings from v0.4.0 included in re-com
+                 [com.andrewmcveigh/cljs-time "0.5.2"]
                  [re-frame "0.10.5"]
                  [re-com "2.1.0"]
-                 [cljsjs/js-beautify "1.6.8-0"]
                  [org.clojure/clojurescript "1.10.238"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-doo "0.1.10"]
-            [lein-figwheel "0.5.15"]]
+            [lein-figwheel "0.5.16"]]
 
   :source-paths ["src"]
 
