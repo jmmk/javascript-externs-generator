@@ -55,13 +55,21 @@
     (str namespace ".prototype = {" (string/join "," (for [p prototype]
                                                        (str (quote-string (:name p)) ": function(){}"))) "};")))
 
+(def valid-variable-regex
+  "https://stackoverflow.com/a/1661249"
+  #"[a-zA-Z_$][0-9a-zA-Z_$]*")
+(defn append-name-to-namespace [namespace name]
+  (if (re-matches valid-variable-regex name)
+    (str namespace "." name)
+    (str namespace "[\"" name "\"]")))
+
 (defn emit-prototype-extern
   "Return recursive string representation of an object's prototype chain"
   [obj namespace]
   (let [{:keys [name props prototype]} obj
         prototype-extern (emit-prototype namespace prototype)
         child-prototype-externs (for [p props]
-                                  (emit-prototype-extern p (str namespace "." (:name p))))]
+                                  (emit-prototype-extern p (append-name-to-namespace namespace (:name p))))]
     (str prototype-extern (string/join child-prototype-externs))))
 
 (defn extract

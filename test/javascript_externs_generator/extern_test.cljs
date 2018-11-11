@@ -88,3 +88,8 @@
         expected "var TEST = {\"testFunction\": function(){}};TEST.testFunction.prototype = {\"x\": function(){}};"]
     (compare! expected js-string)))
 
+(deftest non-standard-property-name
+  (let [js-string "var TEST = {}; TEST['test-function'] = function(){}; TEST['test-function'].prototype.testPrototypeFunction = function(){};"
+        expected "var TEST = {\"test-function\": function(){}};TEST[\"test-function\"].prototype = {\"testPrototypeFunction\": function(){}};"]
+    (compare! expected js-string)))
+
