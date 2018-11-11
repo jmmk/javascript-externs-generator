@@ -60,7 +60,7 @@ main() {
 
   log "Copy package.json back"
   cp "$TMP_DIR/package.json" "$DIR/../package.json"
-  git add ../package.json
+  git add "$DIR/../package.json"
   git commit -q -m "Update package.json"
   git push -q origin master
 
