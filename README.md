@@ -68,6 +68,16 @@ The strategy can be broken into three steps:
 * Make sure phantomjs is installed (follow instructions at https://github.com/bensu/doo#setting-up-environments)
 * `lein doo phantom test`
 
+## Test out externs with the Closure Compiler
+
+### Install Closure Compiler
+With homebrew, this is as simple as `brew install closure-compiler`. For other options, see [the Closure Compiler docs](https://developers.google.com/closure/compiler/)
+
+### Run the compiler in advanced mode
+`closure-compiler --compilation_level ADVANCED [--externs externs.js,] --js file.js[,] [--js_output_file output.js]`
+
+Ideally, it should run successfully and the generated output should not mangle any symbols you are using from the library
+
 ## Issues
 Please report any issues to https://github.com/jmmk/javascript-externs-generator/issues
 
