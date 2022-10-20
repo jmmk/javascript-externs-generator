@@ -2,7 +2,7 @@
 Try it out: http://jmmk.github.io/javascript-externs-generator/
 
 **Note from the developer**:
-The externs generator works pretty well for a wide selection of JS libraries, but there are many exceptions (see the issues for examples). I try to respond to and diagnose issues and I am glad to accept Pull Requests, but I am not actively using or maintaining this.
+The externs generator works pretty well for a wide selection of JS libraries, but there are many exceptions (see the issues for examples). I am not actively using or maintaining this.
 
 If you find that it couldn't properly generate externs, I would advise:
 
